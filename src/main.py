@@ -1,7 +1,25 @@
+import re
 
-def project():
 
-    return True
+def fn_detect(lines):
+
+    fn_positions = []
+
+    exp = r"(?:'|\")(.*?\/.*?\.[\w:]+.*)(?:'|\")"
+
+    for line in lines:
+
+        match = re.search(exp, line)
+
+        if match:
+
+            fn_positions.append(match.group(1))
+
+        else:
+
+            fn_positions.append(False)
+
+    return fn_positions
 
 
 def io_detect(path_positions):
