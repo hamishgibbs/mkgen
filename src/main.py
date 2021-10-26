@@ -55,7 +55,7 @@ def io_detect(path_positions):
     return [inputs, outputs]
 
 
-def construct_target(file, fns, io, exec = "$(PYTHON)"):
+def construct_target(file, fns, io, exec="$(PYTHON)\n"):
 
     name = file.split("/")[0].split(".")[0]
 
@@ -72,9 +72,11 @@ def construct_target(file, fns, io, exec = "$(PYTHON)"):
     return target + "\n\t" + exec
 
 
-def main(root_dir):
+def main(root_dir, makefile_path):
 
     # DEV: need to extract only the correct data files
+    # DEV need to do some work to simplify path navigation
+    # like by assuming that the program is executed from project root or similar
 
     code_files = os.listdir(root_dir)
 
@@ -92,10 +94,28 @@ def main(root_dir):
 
         targets.append(construct_target(file, fns, io))
 
+    with open(makefile_path, "r") as f:
 
-    print(targets)
+        make_lines = f.readlines()
 
-    ## update Makefile
+    start = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets start --\n"][0]
+    end = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets end --\n"][0]
+
+    # remove lines between the auto generated annotations
+    make_lines = make_lines[:start+1] + targets + make_lines[end:]
+
+    print(make_lines)
+
+    print(start, end)
+    print(list(range(start+1, end)))
+    with open(makefile_path, "w") as f:
+
+        [f.write(x) for x in make_lines]
+
+    # insert targets between start and end indices
+
+    ## update Makefile (within )
 
 
-#main("/Users/hamishgibbs/Documents/productivity/mkgen/tests/data")
+#main("/Users/hamishgibbs/Documents/productivity/mkgen/tests/data",
+#     "/Users/hamishgibbs/Documents/productivity/mkgen/Makefile")
