@@ -57,7 +57,7 @@ def io_detect(path_positions):
 
 def construct_target(file, fns, io, exec = "$(PYTHON)"):
 
-    name = file.split("/")[0].split(".")[1]
+    name = file.split("/")[0].split(".")[0]
 
     target = name + ": " + file
 
@@ -69,7 +69,7 @@ def construct_target(file, fns, io, exec = "$(PYTHON)"):
 
         target = target + " " + fns[output]
 
-    return target + "/n/t" + exec
+    return target + "\n\t" + exec
 
 
 def main(root_dir):
@@ -98,4 +98,4 @@ def main(root_dir):
     ## update Makefile
 
 
-main("/Users/hamishgibbs/Documents/productivity/mkgen/tests/data")
+#main("/Users/hamishgibbs/Documents/productivity/mkgen/tests/data")

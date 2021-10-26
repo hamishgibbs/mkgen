@@ -1,5 +1,5 @@
 import pytest
-from src.main import io_detect, fn_detect
+from src.main import io_detect, fn_detect, construct_target
 
 
 @pytest.fixture()
@@ -69,3 +69,12 @@ def test_io_detect_undefined():
 
     assert res[0] == [0, 1]
     assert res[1] == [4, 7]
+
+
+def test_construct_target():
+
+    fns = [False, False, "test.csv", False, False, "test.rds"]
+
+    res = construct_target("file.R", fns, [[2], [5]])
+
+    assert res == "file: file.R test.csv test.rds\n\t$(PYTHON)"
