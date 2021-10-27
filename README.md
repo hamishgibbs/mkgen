@@ -49,7 +49,7 @@ The `mkgen.json` file allows you to specify configurations for the programming l
   * `extensions`: *File extensions for this programming language.*
   * `interpreter`: *The name of the interpreter variable to include in Makefile targets.*
 
-**src_paths**: *An array of file paths to parse in your project. Default: `src`.*
+**src_paths**: *An array of directories to parse in your project. Default: `["src"]`.*
 
 ## Limitations
 
