@@ -24,7 +24,7 @@ mkgen init
 
 This will create a `mkgen.json` file and a new `Makefile`. If you are starting with an existing project, `mkgen init` will update your `Makefile` with `mkgen` annotations.
 
-**Note:** you may have to alter the defaults in the `Makefile` and `mkgen.json` file depending on the configuration of your project.
+*Note: you may have to alter the defaults in the `Makefile` and `mkgen.json` files depending on the configuration of your project.*
 
 Run `mkgen` with:
 
