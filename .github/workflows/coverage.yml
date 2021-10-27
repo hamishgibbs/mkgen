@@ -19,7 +19,7 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-cov
-        python -m pytest --cov=./ --cov-report=xml:./coverage/reports/coverage1.xml
+        python -m pytest --cov=./ --cov-report=xml:coverage.xml
         ls -a
         ls ./coverage/reports
         cat ./coverage/reports/coverage1.xml
