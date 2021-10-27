@@ -5,3 +5,4 @@ __pycache__
 Makefile
 mkgen.json
 .tox
+.coverage
