@@ -14,11 +14,10 @@ from mkgen.utils import flat
 
 def fn_detect(lines):
     """
-    Extracts file paths from code files.
-    Regex to extract paths from file lines
-    Return a list of:
-        * False (no path detected)
-
+    Extracts file paths from code files using a file path regex.
+    For a file of n lines, return a n length list of:
+        * boolean: False (no path detected)
+        * str: Detected file path
     """
 
     fn_positions = []
@@ -37,11 +36,21 @@ def fn_detect(lines):
 
 
 def io_detect(path_positions):
-    # Function to take a list of path positions and divide them into "inputs"
-    # and "outputs"
-    # DEV: doc and optimise this better
+    """
+    Algorithm to partition a list of file paths into two groups [inputs, outputs].
 
-    # store index of True and distance from previous true in a tuple
+    The algorithm assumes a standard i/o pattern of reading data from files,
+    performing operations on data, and writing new files.
+
+    How it works:
+        Calculate the distance between detected paths and divide the list at the
+        max distance into inputs (first) and outputs (last).
+
+    **Note:** This algorithm will fail for patterns other than the pattern
+    described above , for example if all i/o is specified at the top of a script.
+    """
+
+    # TODO: Optimise this further for fun
     dist = []
 
     for i, position in enumerate(path_positions):
@@ -55,13 +64,10 @@ def io_detect(path_positions):
 
             dist.append((i, i - prev_position))
 
-    # Find the highest distance
     max_gap = max([x[1] for x in dist])
 
-    # Define the break point index between input and output groups
     break_point = [x[0] for x in dist if x[1] == max_gap][0] - 1
 
-    # Split input and output indices
     inputs = [x[0] for x in dist if x[0] < break_point]
 
     outputs = [x[0] for x in dist if x[0] > break_point]
@@ -79,6 +85,18 @@ def parse_code_file(config, file, lines):
 
 def main():
     """
+    Automatically generate Makefile targets from code files.
+
+    Objective:
+        Provide a simple way to automatically build a research project
+        while flexibly accomodating multiple languages and coding patterns.
+
+    How it works:
+        * Extract file paths from code files (search paths specified in
+          mkgen.json config file)
+        * Generate Makefile targets
+        * Overwrite old Makefile targets with newly generated targets
+
     Assumptions:
         1. os.getcwd() provides the root directory of the project.
         2. The root has a mkgen.json file.
