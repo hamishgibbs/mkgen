@@ -1,1 +1,1 @@
-![](https://github.com/hamishgibbs/mkgen/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/hamishgibbs/mkgen/actions/workflows/tests.yml/badge.svg)
