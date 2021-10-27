@@ -31,7 +31,7 @@ The problem with defining this pipeline manually is that your code can evolve - 
 
 ## Usage
 
-**Higher Level Targets**
+`# -- mkgen ignore --`
 
 ## How it works
 

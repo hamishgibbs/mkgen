@@ -140,7 +140,10 @@ def main():
         try:
             with open(file, "r") as f:
                 code_lines = f.readlines()
-            targets.append(parse_code_file(config, file, code_lines))
+
+            if "# -- mkgen ignore --\n" not in code_lines:
+                targets.append(parse_code_file(config, file, code_lines))
+
         except Exception as e:
             print(f'Unable to parse { file } with Exception: "{ str(e) }". Skipping.')
             pass
