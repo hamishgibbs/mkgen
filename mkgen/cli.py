@@ -16,6 +16,8 @@ default_makefile_lines = [
     "R = /usr/local/bin/Rscript\n",
     "PYTHON = /usr/local/bin/python\n",
     "\n",
+    "# Space for targets automatically created by mkgen\n",
+    "\n",
 ] + makefile_annotations
 
 
@@ -57,13 +59,6 @@ def init():
                 [f.write(x) for x in default_makefile_lines]
         except Exception:
             Exception("Unable to create a new Makefile.")
-
-
-
-# TODO: Generate a default makefile when starting a project or append
-#  annotations to an existing file init can decide if a makefile is in
-# the directory - if yes, append annotations, else write a new Makefile
-# with default contents.
 
 
 cli.add_command(init)
