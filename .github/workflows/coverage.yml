@@ -20,14 +20,11 @@ jobs:
         pip install pytest
         pip install pytest-cov
         python -m pytest --cov=./ --cov-report=xml
-        cat coverage.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
-      run: |
-        ls
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./coverage/reports/
+        directory: ./
         env_vars: OS,PYTHON
         fail_ci_if_error: true
         files: ./coverage1.xml,./coverage2.xml
