@@ -22,7 +22,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest
     - name: List files
-      run: ls -a
+      run: ls -a && run: ls mkgen
     - name: Test with pytest
       run: python -m pytest
-    
