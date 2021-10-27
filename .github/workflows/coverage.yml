@@ -23,6 +23,8 @@ jobs:
         cat coverage.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
+      run: |
+        ls
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         directory: ./coverage/reports/
