@@ -3,7 +3,10 @@ import os
 import glob
 import json
 
-from mkgen.config import get_interpreter
+from mkgen.config import (
+    get_interpreter,
+    get_code_files
+)
 from mkgen.makefile import (
     get_mkgen_indices,
     insert_new_targets,
@@ -108,8 +111,16 @@ def main():
         * File i/o must be explicit. `mkgen` cannot track input or output through
           nested code execution.
         * i/o files must be accesible from your root project directory.
+        * Files must perform input and output - `mkgen` will not handle
+          creating and writing data without input.
 
     """
+
+    # TODO: Add a known mkgen comment to ignore a certain file when parsing
+    # i.e. # -- mkgen ignore --
+
+    # DEV: We cannot address all coding patterns or cases but can do as much as
+    # possible and fail gracefully
 
     try:
         with open(os.getcwd() + "/mkgen.json") as f:
@@ -125,8 +136,8 @@ def main():
 
     try:
         code_files = get_code_files(config)
-    except Exception:
-        raise Exception("Unable to locate files for parsing.")
+    except Exception as e:
+        raise Exception(f"Unable to locate files for parsing. Exception: {str(e)}")
 
     targets = []
 

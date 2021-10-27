@@ -17,11 +17,11 @@ def construct_target(file, fns, io, interpreter):
 
 def get_mkgen_indices(make_lines):
 
-    start_comment = "# -- mkgen targets start --\n"
-    end_comment = "# -- mkgen targets end --\n"
+    start_comment = "# -- mkgen targets start --"
+    end_comment = "# -- mkgen targets end --"
 
-    start = [i for i, x in enumerate(make_lines) if x == start_comment][0]
-    end = [i for i, x in enumerate(make_lines) if x == end_comment][0]
+    start = [i for i, x in enumerate(make_lines) if start_comment in x][0]
+    end = [i for i, x in enumerate(make_lines) if end_comment in x][0]
 
     return (start, end)
 
