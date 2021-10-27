@@ -3,6 +3,8 @@ import os
 import glob
 import json
 
+from mkgen.config import get_interpreter
+
 # utils.py
 def flat(t):
     return [item for sublist in t for item in sublist]
@@ -58,16 +60,6 @@ def io_detect(path_positions):
 
     return [inputs, outputs]
 
-# config.py
-def get_interpreter(config, file):
-
-    config_extensions = [x["extensions"] for x in config["languages"]]
-
-    file_ext = "." + file.split(".")[-1]
-
-    language_index = [i for i, x in enumerate(config_extensions) if file_ext in x][0]
-
-    return config["languages"][language_index]["interpreter"]
 
 # makefile.py
 def construct_target(file, fns, io, interpreter):
@@ -143,7 +135,7 @@ def main():
             make_lines = f.readlines()
     except Exception:
         raise Exception("Unable to find Makefile file.")
-    
+
     try:
         code_files = get_code_files(config)
     except Exception:
@@ -151,8 +143,6 @@ def main():
 
     targets = []
 
-    # looping through all project code files
-    # extract this logic from main function later
     for file in code_files:
 
         try:

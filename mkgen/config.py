@@ -1,5 +1,3 @@
-import json
-
 default_config = {
     "languages": [
         {"name": "python",
@@ -13,7 +11,12 @@ default_config = {
 }
 
 
-def write_config(default_config):
+def get_interpreter(config, file):
 
-    with open("mkgen.json", "w") as f:
-        json.dump(default_config, f)
+    config_extensions = [x["extensions"] for x in config["languages"]]
+
+    file_ext = "." + file.split(".")[-1]
+
+    language_index = [i for i, x in enumerate(config_extensions) if file_ext in x][0]
+
+    return config["languages"][language_index]["interpreter"]

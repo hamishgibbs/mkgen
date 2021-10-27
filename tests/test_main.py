@@ -1,5 +1,5 @@
 import pytest
-from mkgen.main import io_detect, fn_detect, construct_target, get_interpreter, get_mkgen_indices, insert_new_targets
+from mkgen.main import io_detect, fn_detect, construct_target, get_mkgen_indices, insert_new_targets
 
 
 @pytest.fixture()
@@ -78,22 +78,6 @@ def test_construct_target():
     res = construct_target("file.R", fns, [[2], [5]], "$(PYTHON)")
 
     assert res == "\nfile: test.rds\n\ntest.rds: file.R \\ \n\t\ttest.csv\n\t$(PYTHON)\n\n"
-
-
-def test_get_interpreter():
-
-    config = {"languages": [
-        {"name": "python",
-         "extensions": [".py"],
-         "interpreter": "$(PYTHON)"},
-        {"name": "R",
-         "extensions": [".R", ".r"],
-         "interpreter": "$(R)"}
-    ]}
-
-    res = get_interpreter(config, "file/here/test.R")
-
-    assert res == "$(R)"
 
 
 def test_get_mkgen_indices():

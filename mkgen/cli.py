@@ -1,5 +1,7 @@
+import os
 import click
-from mkgen.config import write_config, default_config
+import json
+from mkgen.config import default_config
 
 
 @click.group(invoke_without_command=True)
@@ -12,7 +14,11 @@ def cli(ctx):
 
 @click.command()
 def init():
-    write_config(default_config)
+    try:
+        with open(os.getcwd() + "/mkgen.json", "w") as f:
+            json.dump(default_config, f)
+    except Exception:
+        Exception("Unable to write mkgen.json file.")
 
 
 cli.add_command(init)
