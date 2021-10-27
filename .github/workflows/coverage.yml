@@ -19,6 +19,8 @@ jobs:
       run: |
         pip install pytest
         pip install pytest-cov
+        mkdir coverage
+        mkdir coverage/reports
         python -m pytest --cov=./ --cov-report=xml
         ls ./coverage/reports
     - name: Upload coverage to Codecov
