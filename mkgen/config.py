@@ -17,11 +17,3 @@ def write_config(default_config):
 
     with open("mkgen.json", "w") as f:
         json.dump(default_config, f)
-
-
-def read_config():
-
-    with open("mkgen.json") as f:
-        config = json.load(f)
-
-    return config

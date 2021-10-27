@@ -1,5 +1,5 @@
 import pytest
-from src.main import io_detect, fn_detect, construct_target, get_interpreter
+from mkgen.main import io_detect, fn_detect, construct_target, get_interpreter, get_mkgen_indices, insert_new_targets
 
 
 @pytest.fixture()
@@ -94,3 +94,31 @@ def test_get_interpreter():
     res = get_interpreter(config, "file/here/test.R")
 
     assert res == "$(R)"
+
+
+def test_get_mkgen_indices():
+
+    make_lines = [
+        "",
+        "other stuff",
+        "",
+        "# -- mkgen targets start --\n",
+        "",
+        "# -- mkgen targets end --\n"
+    ]
+
+    start, end = get_mkgen_indices(make_lines)
+
+    assert start == 3
+    assert end == 5
+
+
+def test_insert_new_targets():
+
+    start, end = (3, 6)
+    make_lines = [0, 0, 0, 1, 0, 0, 1, 0]
+    targets = [2, 2, 2, 2]
+
+    res = insert_new_targets(start, end, make_lines, targets)
+
+    assert res == [0, 0, 0, 1, 2, 2, 2, 2, 1, 0]
