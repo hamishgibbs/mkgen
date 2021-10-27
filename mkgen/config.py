@@ -4,14 +4,10 @@ from mkgen.utils import flat
 
 default_config = {
     "languages": [
-        {"name": "python",
-         "extensions": [".py"],
-         "interpreter": "$(PYTHON)"},
-        {"name": "R",
-         "extensions": [".R", ".r"],
-         "interpreter": "$(R)"}
+        {"name": "python", "extensions": [".py"], "interpreter": "$(PYTHON)"},
+        {"name": "R", "extensions": [".R", ".r"], "interpreter": "$(R)"},
     ],
-    "src_paths": ["src"]
+    "src_paths": ["src"],
 }
 
 
@@ -34,8 +30,7 @@ def get_code_files(config):
 
     for src_path in config["src_paths"]:
         for ext in extensions:
-            fns = glob.glob(os.getcwd() + "/" + src_path + "/*" + ext,
-                            recursive=True)
+            fns = glob.glob(os.getcwd() + "/" + src_path + "/*" + ext, recursive=True)
             code_files.append(fns)
 
     return flat(code_files)

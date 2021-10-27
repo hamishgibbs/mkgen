@@ -35,4 +35,4 @@ def insert_new_targets(start, end, make_lines, targets):
     Insert new targets in Makefile between mkgen annotations
     """
 
-    return make_lines[:start+1] + targets + make_lines[end:]
+    return make_lines[: start + 1] + targets + make_lines[end:]

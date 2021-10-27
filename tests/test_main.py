@@ -6,15 +6,15 @@ from mkgen.main import io_detect, fn_detect
 def file_lines():
 
     lines = [
-        'require(some stuff)',
+        "require(some stuff)",
         "x <- read_csv('/path/to/a/file.shp')",
-        '',
-        'add_five <- function(x){',
-        '   return(x + 5)',
-        '}',
-        '',
-        'x <- add_five(x)',
-        'write_csv(x, "/path/to/my/output.csv")'
+        "",
+        "add_five <- function(x){",
+        "   return(x + 5)",
+        "}",
+        "",
+        "x <- add_five(x)",
+        'write_csv(x, "/path/to/my/output.csv")',
     ]
 
     return lines
@@ -24,8 +24,17 @@ def test_fn_detect_absolute(file_lines):
 
     res = fn_detect(file_lines)
 
-    assert res == [False, "/path/to/a/file.shp", False, False, False,
-                   False, False, False, "/path/to/my/output.csv"]
+    assert res == [
+        False,
+        "/path/to/a/file.shp",
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        "/path/to/my/output.csv",
+    ]
 
 
 def test_fn_detect_relative(file_lines):
@@ -34,9 +43,18 @@ def test_fn_detect_relative(file_lines):
 
     res = fn_detect(file_lines)
 
-    assert res == [False, "/path/to/a/file.shp", False, False, False,
-                   False, False, False, "/path/to/my/output.csv",
-                   "path/to/my/output2.csv"]
+    assert res == [
+        False,
+        "/path/to/a/file.shp",
+        False,
+        False,
+        False,
+        False,
+        False,
+        False,
+        "/path/to/my/output.csv",
+        "path/to/my/output2.csv",
+    ]
 
 
 def test_io_detect():

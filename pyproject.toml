@@ -18,3 +18,14 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 mkgen = "mkgen.cli:cli"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py37
+isolated_build = True
+
+[testenv]
+deps = pytest
+commands = pytest
+"""

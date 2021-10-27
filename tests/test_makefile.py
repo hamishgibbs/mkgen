@@ -7,7 +7,10 @@ def test_construct_target():
 
     res = construct_target("file.R", fns, [[2], [5]], "$(PYTHON)")
 
-    assert res == "\nfile: test.rds\n\ntest.rds: file.R \\ \n\t\ttest.csv\n\t$(PYTHON)\n\n"
+    assert (
+        res
+        == "\nfile: test.rds\n\ntest.rds: file.R \\\n\t\ttest.csv\n\t$(PYTHON) $^ $@\n\n"
+    )
 
 
 def test_get_mkgen_indices():
@@ -18,7 +21,7 @@ def test_get_mkgen_indices():
         "",
         "# -- mkgen targets start --\n",
         "",
-        "# -- mkgen targets end --\n"
+        "# -- mkgen targets end --\n",
     ]
 
     start, end = get_mkgen_indices(make_lines)
