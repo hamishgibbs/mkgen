@@ -3,7 +3,7 @@ import os
 import glob
 import json
 
-
+# utils.py
 def flat(t):
     return [item for sublist in t for item in sublist]
 
@@ -58,7 +58,7 @@ def io_detect(path_positions):
 
     return [inputs, outputs]
 
-
+# config.py
 def get_interpreter(config, file):
 
     config_extensions = [x["extensions"] for x in config["languages"]]
@@ -69,7 +69,7 @@ def get_interpreter(config, file):
 
     return config["languages"][language_index]["interpreter"]
 
-
+# makefile.py
 def construct_target(file, fns, io, interpreter):
 
     name = file.split(".")[0].split("/")[-1]
@@ -98,7 +98,7 @@ def get_code_files(config):
 
     return flat(code_files)
 
-
+# makefile.py
 def get_mkgen_indices(make_lines):
 
     start = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets start --\n"][0]
@@ -106,12 +106,20 @@ def get_mkgen_indices(make_lines):
 
     return (start, end)
 
-
+# makefile.py
 def insert_new_targets(start, end, make_lines, targets):
     # remove lines between the auto generated annotations
     # and insert new targets between start and end indices
 
     return make_lines[:start+1] + targets + make_lines[end:]
+
+
+def parse_code_file(config, file, lines):
+
+    fns = fn_detect(lines)
+    io = io_detect(fns)
+    interpreter = get_interpreter(config, file)
+    return construct_target(file, fns, io, interpreter)
 
 
 def main():
@@ -145,14 +153,13 @@ def main():
     # extract this logic from main function later
     for file in code_files:
 
-        # TODO: catch and pass errors here.
-        with open(file, "r") as f:
-            lines = f.readlines()
-
-        # TODO: extract these 3 lines into a new integration function
-        fns = fn_detect(lines)
-        io = io_detect(fns)
-        targets.append(construct_target(file, fns, io, get_interpreter(config, file)))
+        try:
+            with open(file, "r") as f:
+                code_lines = f.readlines()
+            targets.append(parse_code_file(config, file, code_lines))
+        except Exception as e:
+            print(f"Unable to parse {file} with Exception {str(e)}. Skipping.")
+            pass
 
     start, end = get_mkgen_indices(make_lines)
 
