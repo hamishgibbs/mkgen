@@ -56,7 +56,7 @@ The `mkgen.json` file allows you to specify configurations for the programming l
 The goal of `mkgen` is to automatically construct Makefile targets while remaining flexible to different code patterns, project structures, and programming languages.
 
 `mkgen` relies on recognising file paths using a regular expression. It cannot extract file paths called by a nested function.
-`mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written at the bottom of a file. This is sufficient for a range of coding patterns but will not be suitable for all developers.
+`mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written at the bottom of a file. This is sufficient for a range of coding patterns but will not be suitable for all developers or projects.
 
 ## Contributions
 
