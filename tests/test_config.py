@@ -1,4 +1,4 @@
-from mkgen.config import get_interpreter, default_config
+from mkgen.config import default_config, get_interpreter
 
 
 def test_get_interpreter_py():

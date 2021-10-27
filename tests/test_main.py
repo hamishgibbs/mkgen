@@ -1,5 +1,6 @@
 import pytest
-from mkgen.main import io_detect, fn_detect
+
+from mkgen.main import fn_detect, io_detect
 
 
 @pytest.fixture()

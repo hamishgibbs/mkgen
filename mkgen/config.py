@@ -1,5 +1,6 @@
-import os
 import glob
+import os
+
 from mkgen.utils import flat
 
 default_config = {

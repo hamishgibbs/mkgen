@@ -1,10 +1,10 @@
-import re
-import os
 import glob
 import json
+import os
+import re
 
-from mkgen.config import get_interpreter, get_code_files
-from mkgen.makefile import get_mkgen_indices, insert_new_targets, construct_target
+from mkgen.config import get_code_files, get_interpreter
+from mkgen.makefile import construct_target, get_mkgen_indices, insert_new_targets
 from mkgen.utils import flat
 
 

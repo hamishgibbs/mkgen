@@ -1,6 +1,8 @@
-import os
-import click
 import json
+import os
+
+import click
+
 from mkgen.config import default_config
 from mkgen.main import main
 
