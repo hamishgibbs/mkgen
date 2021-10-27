@@ -21,4 +21,10 @@ def init():
         Exception("Unable to write mkgen.json file.")
 
 
+# TODO: Generate a default makefile when starting a project or append
+#  annotations to an existing file init can decide if a makefile is in
+# the directory - if yes, append annotations, else write a new Makefile
+# with default contents.
+
+
 cli.add_command(init)

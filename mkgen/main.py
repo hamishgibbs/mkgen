@@ -108,6 +108,7 @@ def main():
             * # -- mkgen targets end --
 
     Shortcomings:
+        * Project file names must be unique.
         * File i/o must be explicit. `mkgen` cannot track input or output through
           nested code execution.
         * i/o files must be accesible from your root project directory.
@@ -159,4 +160,4 @@ def main():
     except Exception:
         raise Exception("Unable to write new targets.")
 
-    print(f"Wrote { len(targets) } new targets.")
+    print(f"\U0001F389 Wrote { len(targets) } targets.")
