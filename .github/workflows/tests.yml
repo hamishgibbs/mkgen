@@ -1,2 +1,10 @@
-- name: Run tox-gh-actions
-  uses: ymyzk/run-tox-gh-actions@v0.1
+name: Python package
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    - name: Run tox-gh-actions
+      uses: ymyzk/run-tox-gh-actions@v0.1
