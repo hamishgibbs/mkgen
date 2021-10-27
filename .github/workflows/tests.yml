@@ -6,5 +6,6 @@ on:
 
 jobs:
   test:
-    name: Run tox-gh-actions
-    uses: ymyzk/run-tox-gh-actions@v0.1
+    steps:
+      - name: Run tox-gh-actions
+        uses: ymyzk/run-tox-gh-actions@v0.1
