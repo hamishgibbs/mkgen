@@ -22,7 +22,7 @@ To start using `mkgen`, create and enter a new directory and run:
 mkgen init
 ```
 
-This will create a `mkgen.json` file and create a new `Makefile`. If you are starting with an existing `Makefile`, `mkgen` will update your `Makefile` with annotations.
+This will create a `mkgen.json` file and a new `Makefile`. If you are starting with an existing project, `mkgen init` will update your `Makefile` with `mkgen` annotations.
 
 **Note:** you may have to alter the defaults in the `Makefile` and `mkgen.json` file depending on the configuration of your project.
 
