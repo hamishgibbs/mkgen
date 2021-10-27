@@ -23,5 +23,7 @@ jobs:
         pip install pytest
     - name: List files
       run: ls mkgen
+    - name: PWD
+      run: pwd
     - name: Test with pytest
       run: python -m pytest
