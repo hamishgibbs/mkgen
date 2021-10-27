@@ -23,7 +23,6 @@ jobs:
         ls -a
         python -m pytest
         python -m pytest --cov=./ --cov-report=xml
-        pytest --cov=./ --cov-report=xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
