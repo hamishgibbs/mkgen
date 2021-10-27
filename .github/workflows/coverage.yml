@@ -21,5 +21,12 @@ jobs:
         pip install pytest
         coverage run -m pytest
     - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: actions/checkout@master
+      uses: codecov/codecov-action@v2
       with:
+        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        files: ./coverage1.xml,./coverage2.xml # optional
+        flags: unittests # optional
+        name: codecov-umbrella # optional
+        fail_ci_if_error: true # optional (default = false)
+        verbose: true
