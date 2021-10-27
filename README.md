@@ -34,6 +34,8 @@ mkgen
 
 This will parse the files in your project and generate makefile targets for each file.
 
+`mkgen` creates a default target for each file, allowing you to make targets by their file names.
+
 ## mkgen.json
 
 The `mkgen.json` file allows you to specify configurations for the programming languages and project structure that you would like to parse.
