@@ -1,3 +1,4 @@
+import os
 import glob
 from mkgen.utils import flat
 
@@ -16,11 +17,11 @@ default_config = {
 
 def get_interpreter(config, file):
 
-    config_extensions = [x["extensions"] for x in config["languages"]]
+    config_ext = [x["extensions"] for x in config["languages"]]
 
     file_ext = "." + file.split(".")[-1]
 
-    language_index = [i for i, x in enumerate(config_extensions) if file_ext in x][0]
+    language_index = [i for i, x in enumerate(config_ext) if file_ext in x][0]
 
     return config["languages"][language_index]["interpreter"]
 
