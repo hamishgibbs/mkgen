@@ -2,7 +2,7 @@ import re
 import os
 import glob
 
-from src.config import read_config, write_config
+from mkgen.config import read_config
 
 
 def flat(t):
