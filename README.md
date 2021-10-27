@@ -6,7 +6,7 @@
 
 ## Overview
 
-Conducting research requires interactive development to explore data and make sure that things are working properly. Once you are done with interactive development, it is helpful to be able to run all of the code in your project as an automated pipeline. But your code can evolve - meaning you need to keep track of your project code and the code that manages your pipeline.
+Conducting research requires interactive development to explore data and make sure that things are working properly. Once you are done with interactive development, it is helpful to be able to run all of the code in your project as an automated pipeline.
 
 `mkgen` creates and updates your build pipeline automatically, so that changes to source code are always reflected in the pipeline.
 
