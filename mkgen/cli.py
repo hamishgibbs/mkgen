@@ -2,14 +2,14 @@ import os
 import click
 import json
 from mkgen.config import default_config
+from mkgen.main import main
 
 
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx):
     if ctx.invoked_subcommand is None:
-        # put main() execution here
-        print("main()")
+        main()
 
 
 @click.command()
