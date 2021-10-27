@@ -6,7 +6,7 @@
 
 ## Overview
 
-Conducting research requires interactive development to explore data and make sure that things are working properly. Once you are done with interactive development, it is helpful to be able to run all of the code in your project as an automated pipeline. `mkgen` creates and updates your build pipeline automatically, so that changes to source code are always reflected in the pipeline.
+Conducting research requires interactive development to explore data and get things working. Once you are done with interactive development, it is helpful to be able to run all of the code in your project as an automated pipeline. `mkgen` creates and updates your build pipeline automatically, so that changes to source code are always reflected in the pipeline.
 
 `mkgen` relies on [GNU Make](https://www.gnu.org/software/make/) to generate an automated build pipeline. Using Make means that all of the files in your project are related in a "dependency tree," allowing Make to track which dependencies rely on each other. This makes build times faster for minor changes. It also means that changes to one file are propagated to any other files that depend on it.
 
