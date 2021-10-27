@@ -4,14 +4,22 @@ import glob
 import json
 
 from mkgen.config import get_interpreter
-
-# utils.py
-def flat(t):
-    return [item for sublist in t for item in sublist]
+from mkgen.makefile import (
+    get_mkgen_indices,
+    insert_new_targets,
+    construct_target
+)
+from mkgen.utils import flat
 
 
 def fn_detect(lines):
-    # Regex to extract paths from file lines
+    """
+    Extracts file paths from code files.
+    Regex to extract paths from file lines
+    Return a list of:
+        * False (no path detected)
+
+    """
 
     fn_positions = []
 
@@ -59,51 +67,6 @@ def io_detect(path_positions):
     outputs = [x[0] for x in dist if x[0] > break_point]
 
     return [inputs, outputs]
-
-
-# makefile.py
-def construct_target(file, fns, io, interpreter):
-
-    name = file.split(".")[0].split("/")[-1]
-
-    inputs = [fns[x] for x in io[0]]
-    outputs = [fns[x] for x in io[1]]
-
-    target = "\n" + name + ": " + " ".join(outputs) + "\n\n"
-
-    target = target + " ".join(outputs) + ": " + file + " \ \n\t\t" + " \ \n\t\t".join(inputs) + "\n\t" + interpreter + "\n\n"
-
-    return target
-
-
-def get_code_files(config):
-
-    extensions = flat([x["extensions"] for x in config["languages"]])
-
-    code_files = []
-
-    for src_path in config["src_paths"]:
-        for ext in extensions:
-            fns = glob.glob(os.getcwd() + "/" + src_path + "/*" + ext,
-                            recursive=True)
-            code_files.append(fns)
-
-    return flat(code_files)
-
-# makefile.py
-def get_mkgen_indices(make_lines):
-
-    start = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets start --\n"][0]
-    end = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets end --\n"][0]
-
-    return (start, end)
-
-# makefile.py
-def insert_new_targets(start, end, make_lines, targets):
-    # remove lines between the auto generated annotations
-    # and insert new targets between start and end indices
-
-    return make_lines[:start+1] + targets + make_lines[end:]
 
 
 def parse_code_file(config, file, lines):
