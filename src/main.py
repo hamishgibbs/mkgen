@@ -1,30 +1,35 @@
 import re
 import os
+import glob
+
+from src.config import read_config, write_config
+
+
+def flat(t):
+    return [item for sublist in t for item in sublist]
 
 
 def fn_detect(lines):
+    # Regex to extract paths from file lines
 
     fn_positions = []
 
     exp = r"(?:'|\")(.*?\/.*?\.[\w:]+.*)(?:'|\")"
 
     for line in lines:
-
         match = re.search(exp, line)
 
         if match:
-
             fn_positions.append(match.group(1))
-
         else:
-
             fn_positions.append(False)
 
     return fn_positions
 
 
 def io_detect(path_positions):
-    # Function to take a list of path positions and divide them into "inputs" and "outputs."
+    # Function to take a list of path positions and divide them into "inputs"
+    # and "outputs"
     # DEV: doc and optimise this better
 
     # store index of True and distance from previous true in a tuple
@@ -41,13 +46,13 @@ def io_detect(path_positions):
 
             dist.append((i, i - prev_position))
 
-    # Find the highest different between true index and previous true index
+    # Find the highest distance
     max_gap = max([x[1] for x in dist])
 
-    # Define the break point between input and output groups
+    # Define the break point index between input and output groups
     break_point = [x[0] for x in dist if x[1] == max_gap][0] - 1
 
-    # Split input indices from output indices
+    # Split input and output indices
     inputs = [x[0] for x in dist if x[0] < break_point]
 
     outputs = [x[0] for x in dist if x[0] > break_point]
@@ -55,30 +60,56 @@ def io_detect(path_positions):
     return [inputs, outputs]
 
 
-def construct_target(file, fns, io, exec="$(PYTHON)\n"):
+def get_interpreter(config, file):
 
-    name = file.split("/")[0].split(".")[0]
+    config_extensions = [x["extensions"] for x in config["languages"]]
 
-    target = name + ": " + file
+    file_ext = "." + file.split(".")[-1]
 
-    for input in io[0]:
+    language_index = [i for i, x in enumerate(config_extensions) if file_ext in x][0]
 
-        target = target + " " + fns[input]
-
-    for output in io[1]:
-
-        target = target + " " + fns[output]
-
-    return target + "\n\t" + exec
+    return config["languages"][language_index]["interpreter"]
 
 
-def main(root_dir, makefile_path):
+def construct_target(file, fns, io, interpreter):
+
+    name = file.split(".")[0].split("/")[-1]
+
+    inputs = [fns[x] for x in io[0]]
+    outputs = [fns[x] for x in io[1]]
+
+    target = "\n" + name + ": " + " ".join(outputs) + "\n\n"
+
+    target = target + " ".join(outputs) + ": " + file + " \ \n\t\t" + " \ \n\t\t".join(inputs) + "\n\t" + interpreter + "\n\n"
+
+    return target
+
+
+def get_code_files(config):
+
+    extensions = flat([x["extensions"] for x in config["languages"]])
+
+    code_files = []
+
+    for src_path in config["src_paths"]:
+        for ext in extensions:
+            fns = glob.glob(os.getcwd() + "/" + src_path + "/*" + ext,
+                            recursive=True)
+            code_files.append(fns)
+
+    return flat(code_files)
+
+
+def main():
+
+    config = read_config()
 
     # DEV: need to extract only the correct data files
     # DEV need to do some work to simplify path navigation
     # like by assuming that the program is executed from project root or similar
-
-    code_files = os.listdir(root_dir)
+    # assumption is that execution (cwd) is located at project root
+    root_dir = os.getcwd()
+    code_files = get_code_files(config)
 
     targets = []
 
@@ -86,15 +117,15 @@ def main(root_dir, makefile_path):
     # extract this logic from main function later
     for file in code_files:
 
-        with open(root_dir + "/" + file, "r") as f:
+        with open(file, "r") as f:
             lines = f.readlines()
 
         fns = fn_detect(lines)
         io = io_detect(fns)
 
-        targets.append(construct_target(file, fns, io))
+        targets.append(construct_target(file, fns, io, get_interpreter(config, file)))
 
-    with open(makefile_path, "r") as f:
+    with open(root_dir + "/Makefile", "r") as f:
 
         make_lines = f.readlines()
 
@@ -102,20 +133,9 @@ def main(root_dir, makefile_path):
     end = [i for i, x in enumerate(make_lines) if x == "# -- mkgen targets end --\n"][0]
 
     # remove lines between the auto generated annotations
+    # and insert new targets between start and end indices
     make_lines = make_lines[:start+1] + targets + make_lines[end:]
 
-    print(make_lines)
-
-    print(start, end)
-    print(list(range(start+1, end)))
-    with open(makefile_path, "w") as f:
+    with open(root_dir + "/Makefile", "w") as f:
 
         [f.write(x) for x in make_lines]
-
-    # insert targets between start and end indices
-
-    ## update Makefile (within )
-
-
-#main("/Users/hamishgibbs/Documents/productivity/mkgen/tests/data",
-#     "/Users/hamishgibbs/Documents/productivity/mkgen/Makefile")
