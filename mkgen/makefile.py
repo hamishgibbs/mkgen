@@ -1,5 +1,9 @@
+import os
+
 
 def construct_target(file, fns, io, interpreter):
+
+    file = file.replace(os.getcwd() + "/", "")
 
     name = file.split(".")[0].split("/")[-1]
 
@@ -9,8 +13,8 @@ def construct_target(file, fns, io, interpreter):
     target = "\n" + name + ": " + " ".join(outputs) + "\n\n"
 
     target = target + " ".join(outputs)
-    target = target + ": " + file + " \\ \n\t\t" + " \\ \n\t\t".join(inputs)
-    target = target + "\n\t" + interpreter + "\n\n"
+    target = target + ": " + file + " \\\n\t\t" + " \\\n\t\t".join(inputs)
+    target = target + "\n\t" + interpreter + " $^ $@\n\n"
 
     return target
 
