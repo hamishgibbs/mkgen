@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/hamishgibbs/mkgen/actions/workflows/tests.yml/badge.svg)
 
-*Automated research automation.* `mkgen` is a tool for automatically creating an automated build pipeline for research projects.
+`mkgen` is a tool for automatically creating an automated build pipeline for research projects.
 
 ## Overview
 
