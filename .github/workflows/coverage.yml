@@ -20,6 +20,7 @@ jobs:
         pip install pytest
         pip install pytest-cov
         python -m pytest --cov=./ --cov-report=xml
+        ls -a
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
