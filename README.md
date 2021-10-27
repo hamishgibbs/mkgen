@@ -13,8 +13,8 @@ Conducting research requires interactive development to explore data and get thi
 ## Usage
 
 `mkgen` requires two files to automatically create a build pipeline:
-  * A `mkgen.json` - a configuration file.
-  * `Makefile` - a `Makefile` with formatted comments showing `mkgen` where to write new targets.
+  * `mkgen.json`: a configuration file.
+  * `Makefile`: a `Makefile` with formatted comments showing `mkgen` where to write new targets.
 
 To start using `mkgen`, create and enter a new directory and run:
 
