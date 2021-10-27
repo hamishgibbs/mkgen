@@ -8,14 +8,14 @@ from mkgen.main import main
 
 makefile_annotations = [
     "# -- mkgen targets start --\n",
-    "# -- mkgen targets end --\n"
+    "# -- mkgen targets end --"
 ]
 
 default_makefile_lines = [
-    "# Update these depending on your system configuration"
-    "R = /usr/local/bin/Rscript",
-    "PYTHON = /usr/local/bin/python",
-    "",
+    "# Update these depending on your system configuration\n"
+    "R = /usr/local/bin/Rscript\n",
+    "PYTHON = /usr/local/bin/python\n",
+    "\n",
 ] + makefile_annotations
 
 
@@ -42,7 +42,8 @@ def init():
         except Exception:
             Exception("Unable to open existing Makefile.")
 
-        makefile_lines = makefile_lines + makefile_annotations
+        if not makefile_annotations[0] in makefile_lines:
+            makefile_lines = makefile_lines + makefile_annotations
 
         try:
             with open(os.getcwd() + "/Makefile", "w") as f:
