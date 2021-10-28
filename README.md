@@ -94,7 +94,7 @@ Now, the script `src/plot.R` is connected to the `output/path/to/fig.png` and `p
 The goal of `mkgen` is to automatically construct Makefile targets while remaining flexible to different code patterns, project structures, and programming languages.
 
 1. `mkgen` relies on recognising file paths using a regular expression. It cannot extract file dependencies specified by or within functions.
-2. `mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written around the bottom of a file. This assumption can accommodate a range of coding patterns but will not be suitable for all developers or projects.
+2. `mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written around the bottom of a file. This assumption can accommodate a range of development patterns but will not be suitable for all developers or projects.
 
 *Note: You can use the comment: `# -- mkgen ignore --` if you would like `mkgen` to ignore a specific file when parsing your project.*
 
