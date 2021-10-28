@@ -55,12 +55,12 @@ The `mkgen.json` file allows you to specify configurations for the programming l
 
 ## How it works
 
-`mkgen` detects file paths in source code and constructs Makefile targets based on the assumption that inputs tend to be in the top of a script and outputs tend to be at the bottom.
+`mkgen` detects file paths in source code and constructs Makefile targets based on the assumption that inputs tend to be at the top of a script and outputs tend to be at the bottom.
 
 Consider a target generated from a file located at `src/plot.R`:
 
 *src/plot.R*
-```{r}
+```r
 require(readr)
 require(ggplot2)
 
@@ -79,7 +79,7 @@ ggsave(p,
 `mkgen` will extract the input and output file paths from this script and construct the makefile target:
 
 *Makefile*
-```{shell}
+```shell
 plot: output/path/to/fig.png
 
 output/path/to/fig.png: src/plot.R \
