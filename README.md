@@ -13,8 +13,8 @@ Conducting research requires interactive development to explore data and get thi
 ## Usage
 
 `mkgen` requires two files to automatically create a build pipeline:
-  * `mkgen.json`: a configuration file.
-  * `Makefile`: a `Makefile` with formatted comments showing `mkgen` where to write new targets.
+  * `mkgen.json`: *a configuration file.*
+  * `Makefile`: *a `Makefile` with formatted comments showing `mkgen` where to write generated targets.*
 
 To start using `mkgen`, create and enter a new directory and run:
 
@@ -34,20 +34,14 @@ mkgen
 
 This will parse the files in your project and generate makefile targets for each file.
 
-`mkgen` creates a default target for each file, allowing you to make targets by their file names. For a file named `src/plot.R`, call:
-
-```
-make plot
-```
-
 ## mkgen.json
 
 The `mkgen.json` file allows you to specify configurations for the programming languages and project structure that you would like to parse.
 
 **languages:** *An array of programming language options.*
   * `name`: *The name of the programming language.*
-  * `extensions`: *File extensions for this programming language.*
-  * `interpreter`: *The name of the interpreter variable to include in Makefile targets.*
+  * `extensions`: *File extensions for this programming language. R defaults: `[".r", ".R"]`, Python defaults: `[".py"]`*
+  * `interpreter`: *The name of the interpreter variable to include in Makefile targets. R default: `$(R)`, Python default: `$(PYTHON)`*
 
 **src_paths**: *An array of directories to parse in your project. Default: `["src"]`.*
 
