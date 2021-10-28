@@ -61,8 +61,7 @@ Consider a target generated from a file located at `src/plot.R`:
 
 *src/plot.R*
 ```r
-require(readr)
-require(ggplot2)
+require(tidyverse)
 
 data <- read_csv("path/to/input/data.csv")
 
