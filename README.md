@@ -10,6 +10,14 @@ Conducting research requires interactive development to explore data and get thi
 
 `mkgen` relies on [GNU Make](https://www.gnu.org/software/make/). Using Make means that all of the files in your project are related to each other in a "dependency tree." This makes build times faster for minor changes and means that changes to one file are propagated to any other files that depend on it.
 
+## Installation
+
+Install `mkgen` from GitHub with `pip`:
+
+```
+pip install git+https://github.com/hamishgibbs/mkgen.git
+```
+
 ## Usage
 
 `mkgen` requires two files to automatically create a build pipeline:
