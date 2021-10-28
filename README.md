@@ -51,13 +51,51 @@ The `mkgen.json` file allows you to specify configurations for the programming l
 
 **src_paths**: *An array of directories to parse in your project. Default: `["src"]`.*
 
+## How it works
+
+`mkgen` detects file paths in source code and constructs Makefile targets based on the assumption that inputs tend to be in the top of a script and outputs tend to be at the bottom.
+
+Consider a target generated from a file located at `src/plot.R`:
+
+*src/plot.R*
+```{r}
+require(readr)
+require(ggplot2)
+
+data <- read_csv("path/to/input/data.csv")
+
+data$y = data$y * 7
+
+p <- data %>%
+  ggplot() +
+  geom_path(aes(x=x, y=y))
+
+ggsave(p,
+       "output/path/to/fig.png")  
+```
+
+`mkgen` will extract the input and output file paths from this script and construct the makefile target:
+
+*Makefile*
+```{shell}
+plot: output/path/to/fig.png
+
+output/path/to/fig.png: src/plot.R \
+    path/to/input/data.csv
+  $(R) $^ $@
+```
+
+Now, the script `src/plot.R` is connected to the `output/path/to/fig.png` and `path/to/input/data.csv` files. Run `make plot` to construct the plot.
+
 ## Limitations
 
 The goal of `mkgen` is to automatically construct Makefile targets while remaining flexible to different code patterns, project structures, and programming languages.
 
-`mkgen` relies on recognising file paths using a regular expression. It cannot extract file paths called by a nested function.
-`mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written at the bottom of a file. This is sufficient for a range of coding patterns but will not be suitable for all developers or projects.
+`mkgen` relies on recognising file paths using a regular expression. It cannot extract file dependencies specified by or within functions.
+`mkgen` assumes that inputs are read in (roughly) at the top of a file and that outputs are written around the bottom of a file. This assumption can accommodate a range of coding patterns but will not be suitable for all developers or projects.
+
+You can use the comment: `# -- mkgen ignore --` if you would like `mkgen` to ignore a specific file when parsing your project.
 
 ## Contributions
 
-Contributions are welcome. Please [open an issue](https://github.com/hamishgibbs/mkgen/issues/new).
+Contributions are welcome. If you find a bug or would like to contribute, please [open an issue](https://github.com/hamishgibbs/mkgen/issues/new).
